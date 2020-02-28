@@ -25,3 +25,8 @@ GO
 
 ALTER TABLE [dbo].[Config] CHECK CONSTRAINT [FK_Config_LastCommitedTransactionID]
 GO
+
+-- Data:
+
+INSERT [dbo].[Config] ([DiffPath], [DatabaseState], [LastCommitedHeaderID]) VALUES (N'<path-to-IPI-files>', 0, 0)
+GO
