@@ -1,0 +1,55 @@
+
+/*
+Object:			dbo.Parse_NCN
+Description:	Parses all non-parsed NCN rows.
+*/
+
+CREATE PROCEDURE [dbo].[Parse_NCN]
+	@Version char(5)
+AS
+
+SET NOCOUNT ON;
+
+DECLARE @RowCode AS char(3) = 'NCN';
+DECLARE @RowCount AS int;
+
+EXEC dbo.ValidateRowLength @RowCode, @Version;
+
+INSERT INTO dbo.Row
+(RowID, HeaderID, RowCode, HeaderCode, TranSeq, RecordSeq, IPNN
+	, Name, FirstName, NameType, CreationDate, CreationTime
+	, AmendDate, AmendTime)
+SELECT 
+	RowID
+	, HeaderID
+	, RowCode
+	, HeaderCode
+	, SUBSTRING(Row, 4, 8)
+	, SUBSTRING(Row, 12, 8)
+	, SUBSTRING(Row, 20, 11)
+	, SUBSTRING(Row, 31, 90)
+	, SUBSTRING(Row, 121, 45)
+	, SUBSTRING(Row, 166, 2)
+	, SUBSTRING(Row, 168, 8)
+	, SUBSTRING(Row, 176, 6)
+	, SUBSTRING(Row, 182, 8)
+	, SUBSTRING(Row, 190, 6)	
+FROM dbo.Import
+WHERE RowCode = @RowCode
+	--AND [Version] = @Version
+	AND IsParsed = 0
+	AND ErrorID = 0;	-- parse only valid rows
+
+SET @RowCount = @@ROWCOUNT;
+
+-- update parse status
+EXEC dbo.UpdateParseStatus @RowCode, @Version;
+
+-- output message
+DECLARE @msg AS nvarchar(MAX) = @RowCode + ' parser finished: ' + CAST(@RowCount AS nvarchar(10));
+EXEC dbo.FastPrint @msg;
+
+
+GO
+
+
