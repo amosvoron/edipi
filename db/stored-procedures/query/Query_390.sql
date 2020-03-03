@@ -1,6 +1,3 @@
-USE [EDIPI]
-GO
-
 
 /*
 Object:			dbo.Query_390

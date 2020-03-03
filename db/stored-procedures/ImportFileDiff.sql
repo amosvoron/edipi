@@ -1,13 +1,4 @@
-﻿USE [EDIPI]
-GO
-
-/****** Object:  StoredProcedure [dbo].[ImportFileDiff]    Script Date: 3. 03. 2020 10:17:07 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
+﻿
 /*
 Object:				dbo.ImportFileDiff
 Description:		Imports differential (day) files using BULK INSERT.

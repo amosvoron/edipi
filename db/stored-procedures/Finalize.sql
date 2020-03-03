@@ -1,9 +1,3 @@
-USE [EDIPI]
-GO
-
-/****** Object:  StoredProcedure [dbo].[Finalize]    Script Date: 3. 03. 2020 10:15:15 ******/
-SET ANSI_NULLS ON
-GO
 
 /*
 Object:			dbo.Finalize
@@ -22,9 +16,6 @@ SET NOCOUNT ON;
 -- Sets the database state as READY.
 --UPDATE dbo.[Config] SET [DatabaseState] = 0;
 EXEC dbo.SetReady;
-
--- Re-enable the triggers.
-EXEC dbo.EnableRejectTriggers;
 
 -- Output to console.
 EXEC dbo.FastPrint '=============================================================';

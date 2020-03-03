@@ -1,12 +1,3 @@
-USE [EDIPI]
-GO
-
-/****** Object:  StoredProcedure [dbo].[Query_320]    Script Date: 2. 03. 2020 09:49:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 /*
 Object:			dbo.Query_320
