@@ -1,3 +1,4 @@
+
 /*
 	Configuration table:
 		- DiffPath: A path where differential files are stored.
@@ -8,7 +9,7 @@
 CREATE TABLE [dbo].[Config](
 	[DiffPath] [nvarchar](260) NOT NULL,
 	[DatabaseState] [int] NOT NULL,
-	[LastCommitedHeaderID] [bigint] NOT NULL
+	[LastCommitedHeaderID] [bigint] NULL
 ) ON [PRIMARY]
 GO
 
@@ -19,14 +20,4 @@ GO
 ALTER TABLE [dbo].[Config] CHECK CONSTRAINT [FK_Config_DatabaseState]
 GO
 
-ALTER TABLE [dbo].[Config]  WITH CHECK ADD  CONSTRAINT [FK_Config_LastCommitedTransactionID] FOREIGN KEY([LastCommitedHeaderID])
-REFERENCES [dbo].[Row] ([RowID])
-GO
 
-ALTER TABLE [dbo].[Config] CHECK CONSTRAINT [FK_Config_LastCommitedTransactionID]
-GO
-
--- Data:
-
-INSERT [dbo].[Config] ([DiffPath], [DatabaseState], [LastCommitedHeaderID]) VALUES (N'<path-to-IPI-files>', 0, 0)
-GO

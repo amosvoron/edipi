@@ -34,12 +34,11 @@ GO
 ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_HeaderCode]
 GO
 
-ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_HeaderID] FOREIGN KEY([HeaderID])
-REFERENCES [dbo].[Row] ([RowID])
-GO
-
-ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_HeaderID]
-GO
+--  Do not create association with dbo.Row
+--ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_HeaderID] FOREIGN KEY([HeaderID])
+--REFERENCES [dbo].[Row] ([RowID])
+--ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FK_Transaction_HeaderID]
+--GO
 
 ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FK_Transaction_SID] FOREIGN KEY([SID])
 REFERENCES [dbo].[Session] ([SID])
