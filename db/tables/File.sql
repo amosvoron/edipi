@@ -1,3 +1,4 @@
+
 /*
 	File table containing EDI file description data.
 */
@@ -5,7 +6,7 @@
 CREATE TABLE [dbo].[File](
 	[FileID] [int] IDENTITY(1,1) NOT NULL,
 	[File] [nvarchar](128) NOT NULL,
-	[SID] [int] NOT NULL,
+	[SID] [int] NULL,
 	[ImportDate] [datetime] NOT NULL,
 	[FirstRowID] [bigint] NOT NULL,
 	[LastRowID] [bigint] NOT NULL,
@@ -24,10 +25,7 @@ CREATE TABLE [dbo].[File](
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[File] ADD  CONSTRAINT [DF_File_SID]  DEFAULT ((0)) FOR [SID]
-GO
-
-ALTER TABLE [dbo].[File] ADD  CONSTRAINT [DF_File_Date]  DEFAULT (getdate()) FOR [ImportDate]
+ALTER TABLE [dbo].[File] ADD  CONSTRAINT [DF_File_ImportDate]  DEFAULT (getdate()) FOR [ImportDate]
 GO
 
 ALTER TABLE [dbo].[File] ADD  CONSTRAINT [DF_File_FirstRowID]  DEFAULT ((0)) FOR [FirstRowID]
@@ -39,9 +37,4 @@ GO
 ALTER TABLE [dbo].[File] ADD  CONSTRAINT [DF_File_IsDiff]  DEFAULT ((1)) FOR [IsDiff]
 GO
 
-ALTER TABLE [dbo].[File]  WITH CHECK ADD  CONSTRAINT [FK_File_SID] FOREIGN KEY([SID])
-REFERENCES [dbo].[Session] ([SID])
-GO
 
-ALTER TABLE [dbo].[File] CHECK CONSTRAINT [FK_File_SID]
-GO
