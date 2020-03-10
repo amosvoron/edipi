@@ -8,16 +8,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
- - A compatible Windows OS
- - SQL Server 2012 or later
-     + [SQL Server installation guide](https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server?view=sql-server-ver15)
- - SQL Server Management Studio or compatible SQL client for SQL Server
-     + [Download SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+What things you need to install the software and how to install them
 
+```
+Give examples
+```
 
 ### Installation
 
-First clone this repository into your local environment.
+First clone this repository.
 
 ### Clone
 ```sh
@@ -26,41 +25,49 @@ $ git clone https://github.com/amosvoron/edipi.git
 
 ### Create database
 
-Open your SQL client application, connect to the server and create a database.
+Open your SQL client application and create the EDI IPI database.
 
 ```
-CREATE DATABASE Edipi
-```
+Most basic example of creating a database:
 
-You can find more information about creating an SQL Server database [here](https://docs.microsoft.com/en-us/sql/t-sql/statements/create-database-transact-sql?view=sql-server-ver15).
-
-### Run create-db.sql script
-
-Open the **create-db.sql** script that you find in the repository's root. Make sure that you choose newly created Edipi database by:
+CREATE DATABASE db
 
 ```
-USE Edipi
-```
 
-Now run the script which creates all SQL objects and inserts default data.
-
-### Choose file store and copy files
-
-Choose a directory where the EDI files for ETL import will be stored. Then copy the files from the */data directory* of this repository to the chosen file store.
-
-### Initialize database
-
-Execute procedure **dbo.InitializeDatabase** by:
+And repeat
 
 ```
-EXEC dbo.InitializeDatabase '<path-to-your-file-store>', '20130530.IPI'
+until finished
 ```
 
-The initialization makes two initial inserts into *dbo.File* table and *dbo.Config* table.
+End with an example of getting some data out of the system or using it for a little demo
+
+### Clone
+```sh
+$ git clone https://github.com/amosvoron/edipi.git
+```
 
 ## Running the tests
 
 Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Repository Description
 
@@ -89,10 +96,18 @@ Explain how to run the automated tests for this system
 - LICENCE.md                        # LICENCE file
 ```
 
+## Authors
+
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
-
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
