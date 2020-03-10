@@ -2,12 +2,37 @@
 
 EDIPI is an ETL pipeline project that extracts textual data in EDI format from file storage into relational IPI database, processes transactions over imported data and loads transformed data into target tables of an IPI database. The ETL process is subject to EDI/IPI standard whose protocols governs the composition of data in IPI files, the definition of IPI data model, and describes the transactions over IPI data due to the daily changes which are collected, prepared, and further transmitted through EDI files by the IPI centre at SUISA. 
 
-## Deployment
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+ - A compatible Windows OS
+ - SQL Server 2012 or later
+     + [SQL Server installation guide](https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server?view=sql-server-ver15)
+ - SQL Server Management Studio or compatible SQL client for SQL Server
+     + [Download SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+
+
+### Installation
+
+First clone this repository into your local environment.
 
 ### Clone
 ```sh
 $ git clone https://github.com/amosvoron/edipi.git
 ```
+
+### Create database
+
+Open your SQL client application and create the EDI IPI database.
+
+```
+CREATE DATABASE Edipi
+```
+
+Note that this is the most basic T-SQL instruction. You can find more information about creating an SQL Server database [here](https://docs.microsoft.com/en-us/sql/t-sql/statements/create-database-transact-sql?view=sql-server-ver15).
 
 ## Repository Description
 
