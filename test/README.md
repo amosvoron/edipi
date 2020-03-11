@@ -46,5 +46,59 @@ It will take few minutes to finish. When the process is over all data should be 
   <br /><br />
 </div>
 
+If you check the output of the execution you'll find the description of the ETL process:
+
+```
+New session 1 is created.
+=============================================================
+THE PROCESSING STARTED. DATABASE IS IN PROCESSING STATE.
+=============================================================
+Checking identity information: current identity value 'NULL'.
+DBCC execution completed. If DBCC printed error messages, contact your system administrator.
+-----------------------------------------------
+Import table has been cleared and reseeded.
+Next RowID set to: 1
+-----------------------------------------------
+File 20130530.IPI: import finished.
+File 20130531.IPI: import finished.
+File 20130601.IPI: import finished.
+File 20130602.IPI: import finished.
+-------------------------------------------
+RowCodes have been parsed.
+Import header is valid.
+-------------------------------------------
+Parsing started...
+BDN parser finished: 251
+BDO parser finished: 86
+...
+...
+...
+TMA parser finished: 11539
+Parsing completed.
+---------------------------------------------------------
+Updating HeaderID in 4 package(s). Please wait...
+4
+3
+2
+---------------------------------------------------------
+Update of HeaderID is finished.
+Header in dbo.Row table (dbo.Row) UPDATED.
+New transactions have been added (444).
+-------------------------------------------
+Imported data has been successfully parsed.
+The processing started...
+#3>IPA
+#238>IPA
+...
+...
+...
+#25271>BDU
+The processing completed.
+Duplicates of IPNameUsage removed.
+=============================================================
+THE PROCESSING COMPLETED. DATABASE IS IN READY STATE.
+=============================================================
+```
+
 If you want to test more data after the initial test is done, make sure that all further files have consecutive dates that continue the last date from initial import *without any gap*. Each day must be represented by a *single* file. And, the most important, the content of files must *strictly* implement the **EDI protocol for the IPI system**.
 
