@@ -14,7 +14,7 @@ Societies keep local copies of the IPI database within their systems and synchro
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -78,7 +78,7 @@ Run the [initial test](/test) and check the description of the ETL process when 
 EXEC dbo.Process
 ```
 
-Just follow the same instructions that are given for the [initial test](/test). If you want to import other files then pay attention that the dates are always consecutive without gaps - next file to import *must follow by date* the last imported file - and that the content of files *strictly* implement the **EDI protocol for the IPI system**. 
+Just follow the same instructions that are given for the [initial test](/test). If you want to import other files then pay attention that the dates are always consecutive without gaps - next file to import *must follow by date* the last imported file - and that the content of files *strictly* implements the **EDI protocol for the IPI system**. 
 
 ## Repository Description
 
@@ -113,5 +113,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-I'd like to thank [Stroka](https://www.stroka.si/), an IT company for which I developed the EDI/IPI system and which decided to go open source with the project.  
+I'd like to thank [Stroka](https://www.stroka.si/) for which I developed the EDI/IPI system and which decided to go open source with the project.  
 
