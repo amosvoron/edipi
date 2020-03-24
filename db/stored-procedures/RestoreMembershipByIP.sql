@@ -67,7 +67,7 @@ BEGIN TRY
 		EXEC dbo.Query_260 @HeaderID;
 
 		-- MAU:TMA
-		EXEC dbo.Query_270_FORCED @HeaderID;
+		EXEC dbo.Query_270 @HeaderID;
 
 		FETCH NEXT FROM cur1 INTO @HeaderID;
 	END	-- cursor
