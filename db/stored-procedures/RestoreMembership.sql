@@ -127,40 +127,6 @@ END CATCH;
 -- Finalizer
 --------------------------------------------------------
 
--- update processing status
-UPDATE [dbo].[Restore]
-SET IsProcessing = 0
-	, ForProcessing = 0
-WHERE ForProcessing = 1;
-
--- update new membership counters
-UPDATE X
-SET X.[MembershipNewCount] = ISNULL(A.N, 0)
-FROM [dbo].[Restore] AS X
-LEFT OUTER JOIN (
-	SELECT AA.ID, COUNT(*) AS N
-	FROM [ipi].[IPMembership] AS AA
-	INNER JOIN #IDS AS CC ON AA.ID = CC.ID
-	GROUP BY AA.ID
-) AS A ON X.ID = A.ID
-WHERE EXISTS (
-	SELECT 1
-	FROM #IDS AS AA
-	WHERE AA.ID = X.ID);
-
-UPDATE X
-SET X.[MembershipTerritoryNewCount] = ISNULL(A.N, 0)
-FROM [dbo].[Restore] AS X
-LEFT OUTER JOIN (
-	SELECT AA.ID, COUNT(*) AS N
-	FROM [ipi].[IPMembership] AS AA
-	INNER JOIN [ipi].[IPMembershipTerritory] AS BB ON AA.MID = BB.MID
-	INNER JOIN #IDS AS CC ON AA.ID = CC.ID
-	GROUP BY AA.ID
-) AS A ON X.ID = A.ID
-WHERE EXISTS (
-	SELECT 1
-	FROM #IDS AS AA
-	WHERE AA.ID = X.ID);
+EXEC FinalizeRestore;
 
 EXEC dbo.FastPrint 'Membership restore completed.';
