@@ -4,9 +4,8 @@ Object:			dbo.RestoreMembership
 Description:	Restore membership data for a given N interested parties.		 
 */
 
-CREATE PROCEDURE [dbo].[RestoreMembership]
+ALTER PROCEDURE [dbo].[RestoreMembership]
 	@N int = 10			-- how many IPs to restore
-	, @ID int = NULL	-- if given only THIS particular ID is processed
 AS
 
 SET NOCOUNT ON;
@@ -25,7 +24,8 @@ BEGIN TRY
 
 	CREATE TABLE #IDS (ID int NOT NULL PRIMARY KEY);
 
-	IF @ID IS NULL
+	-- get top @N which can be restored
+	IF @N IS NOT NULL
 	BEGIN
 		INSERT INTO #IDS
 		SELECT TOP(@N) ID
@@ -37,7 +37,8 @@ BEGIN TRY
 		INSERT INTO #IDS
 		SELECT ID
 		FROM [dbo].[Restore] AS A
-		WHERE ID = @ID AND CanRestore = 1;
+		WHERE ForProcessing = 1	
+			AND CanRestore = 1
 	END;
 
 	IF @@ROWCOUNT = 0
@@ -86,6 +87,14 @@ BEGIN TRY
 		WHERE AA.ID = X.ID);
 
 --------------------------------------------------------
+-- Disable reject triggers
+--------------------------------------------------------
+
+	ALTER TABLE [ipi].[IPMembership] DISABLE TRIGGER [IPMembership_RejectTrigger];
+	ALTER TABLE [ipi].[IPMembership] DISABLE TRIGGER [IPMembership_DeleteBuffer];
+	ALTER TABLE [ipi].[IPMembershipTerritory] DISABLE TRIGGER [IPMembershipTerritory_RejectTrigger];
+
+--------------------------------------------------------
 -- Loop through IPs and run RestoreMembershipByIP
 -- (for every IP)
 --------------------------------------------------------
@@ -94,6 +103,7 @@ BEGIN TRY
 
 	DECLARE @Ret int;
 	DECLARE @k int = 1;
+	DECLARE @ID int;
 
 	-- cursor			
 	DECLARE cur1 CURSOR LOCAL READ_ONLY FOR
@@ -122,6 +132,14 @@ BEGIN CATCH
 		VALUES (ISNULL(@ID, -1), -2, @e);
 	EXEC dbo.FastPrint @e;
 END CATCH;
+
+--------------------------------------------------------
+-- Enable reject triggers
+--------------------------------------------------------
+
+ALTER TABLE [ipi].[IPMembership] ENABLE TRIGGER [IPMembership_RejectTrigger];
+ALTER TABLE [ipi].[IPMembership] ENABLE TRIGGER [IPMembership_DeleteBuffer];
+ALTER TABLE [ipi].[IPMembershipTerritory] ENABLE TRIGGER [IPMembershipTerritory_RejectTrigger];
 
 --------------------------------------------------------
 -- Finalizer
