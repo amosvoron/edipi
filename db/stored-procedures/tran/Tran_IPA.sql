@@ -28,7 +28,8 @@ BEGIN TRY
 	EXEC dbo.Query_30 @HeaderID;
 	EXEC dbo.Query_40 @HeaderID;
 	EXEC dbo.Query_50 @HeaderID;
-	EXEC dbo.Query_60 @HeaderID;
+	EXEC dbo.Query_TMA @HeaderID, 'IPA';	-- IPA:TMA
+	--EXEC dbo.Query_60 @HeaderID;
 	EXEC dbo.Query_70 @HeaderID;
 	EXEC dbo.Query_80 @HeaderID;
 	EXEC dbo.Query_90 @HeaderID;
@@ -40,8 +41,3 @@ BEGIN CATCH
 	RAISERROR(@e, @v, @s);
 	
 END CATCH;
-
-
-GO
-
-

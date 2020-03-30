@@ -17,7 +17,8 @@ SET NOCOUNT ON;
 BEGIN TRY
 
 	EXEC dbo.Query_100 @HeaderID;
-	EXEC dbo.Query_110 @HeaderID;
+	EXEC dbo.Query_TMA @HeaderID, 'MAA';	-- MAA:TMA
+	--EXEC dbo.Query_110 @HeaderID;
 
 END TRY
 BEGIN CATCH
@@ -26,7 +27,6 @@ BEGIN CATCH
 	RAISERROR(@e, @v, @s);
 	
 END CATCH;
-
 
 GO
 
