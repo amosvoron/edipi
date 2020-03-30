@@ -4,7 +4,7 @@ Object:			dbo.RestoreMembership
 Description:	Restore membership data for a given N interested parties.		 
 */
 
-ALTER PROCEDURE [dbo].[RestoreMembership]
+CREATE PROCEDURE [dbo].[RestoreMembership]
 	@N int = 10			-- how many IPs to restore
 AS
 
@@ -87,14 +87,6 @@ BEGIN TRY
 		WHERE AA.ID = X.ID);
 
 --------------------------------------------------------
--- Disable reject triggers
---------------------------------------------------------
-
-	ALTER TABLE [ipi].[IPMembership] DISABLE TRIGGER [IPMembership_RejectTrigger];
-	ALTER TABLE [ipi].[IPMembership] DISABLE TRIGGER [IPMembership_DeleteBuffer];
-	ALTER TABLE [ipi].[IPMembershipTerritory] DISABLE TRIGGER [IPMembershipTerritory_RejectTrigger];
-
---------------------------------------------------------
 -- Loop through IPs and run RestoreMembershipByIP
 -- (for every IP)
 --------------------------------------------------------
@@ -134,17 +126,10 @@ BEGIN CATCH
 END CATCH;
 
 --------------------------------------------------------
--- Enable reject triggers
---------------------------------------------------------
-
-ALTER TABLE [ipi].[IPMembership] ENABLE TRIGGER [IPMembership_RejectTrigger];
-ALTER TABLE [ipi].[IPMembership] ENABLE TRIGGER [IPMembership_DeleteBuffer];
-ALTER TABLE [ipi].[IPMembershipTerritory] ENABLE TRIGGER [IPMembershipTerritory_RejectTrigger];
-
---------------------------------------------------------
 -- Finalizer
 --------------------------------------------------------
 
 EXEC FinalizeRestore;
 
 EXEC dbo.FastPrint 'Membership restore completed.';
+
