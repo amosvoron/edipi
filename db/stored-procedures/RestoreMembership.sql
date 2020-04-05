@@ -54,37 +54,19 @@ BEGIN TRY
 	WHERE X.ID IN (SELECT ID FROM #IDS);
 
 --------------------------------------------------------
--- Store current membership data count in Restore table
+-- Initialize restore by counting 
+-- current membership data.
 --------------------------------------------------------
 
-	UPDATE X
-	SET X.[MembershipOldCount] = ISNULL(A.N, 0)
-	FROM [dbo].[Restore] AS X
-	LEFT OUTER JOIN (
-		SELECT AA.ID, COUNT(*) AS N
-		FROM [ipi].[IPMembership] AS AA
-		INNER JOIN #IDS AS CC ON AA.ID = CC.ID
-		GROUP BY AA.ID
-	) AS A ON X.ID = A.ID
-	WHERE EXISTS (
-		SELECT 1
-		FROM #IDS AS AA
-		WHERE AA.ID = X.ID);
+	EXEC dbo.InitializeRestore;
 
-	UPDATE X
-	SET X.[MembershipTerritoryOldCount] = ISNULL(A.N, 0)
-	FROM [dbo].[Restore] AS X
-	LEFT OUTER JOIN (
-		SELECT AA.ID, COUNT(*) AS N
-		FROM [ipi].[IPMembership] AS AA
-		INNER JOIN [ipi].[IPMembershipTerritory] AS BB ON AA.MID = BB.MID
-		INNER JOIN #IDS AS CC ON AA.ID = CC.ID
-		GROUP BY AA.ID
-	) AS A ON X.ID = A.ID
-	WHERE EXISTS (
-		SELECT 1
-		FROM #IDS AS AA
-		WHERE AA.ID = X.ID);
+--------------------------------------------------------
+-- Disable reject triggers
+--------------------------------------------------------
+
+	ALTER TABLE [ipi].[IPMembership] DISABLE TRIGGER [IPMembership_RejectTrigger];
+	ALTER TABLE [ipi].[IPMembership] DISABLE TRIGGER [IPMembership_DeleteBuffer];
+	ALTER TABLE [ipi].[IPMembershipTerritory] DISABLE TRIGGER [IPMembershipTerritory_RejectTrigger];
 
 --------------------------------------------------------
 -- Loop through IPs and run RestoreMembershipByIP
@@ -126,10 +108,17 @@ BEGIN CATCH
 END CATCH;
 
 --------------------------------------------------------
+-- Enable reject triggers
+--------------------------------------------------------
+
+ALTER TABLE [ipi].[IPMembership] ENABLE TRIGGER [IPMembership_RejectTrigger];
+ALTER TABLE [ipi].[IPMembership] ENABLE TRIGGER [IPMembership_DeleteBuffer];
+ALTER TABLE [ipi].[IPMembershipTerritory] ENABLE TRIGGER [IPMembershipTerritory_RejectTrigger];
+
+--------------------------------------------------------
 -- Finalizer
 --------------------------------------------------------
 
 EXEC FinalizeRestore;
 
 EXEC dbo.FastPrint 'Membership restore completed.';
-
